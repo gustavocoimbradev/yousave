@@ -3,7 +3,8 @@ const { contextBridge, ipcRenderer } = require("electron");
 contextBridge.exposeInMainWorld("yousave", {
   download: (payload) => ipcRenderer.invoke("download", payload),
   cancelDownload: () => ipcRenderer.invoke("cancel-download"),
-  showInFolder: (filePath) => ipcRenderer.invoke("show-in-folder", filePath),
+  openFile: (filePath) => ipcRenderer.invoke("open-file", filePath),
+  openExternal: (url) => ipcRenderer.invoke("open-external", url),
   getSettings: () => ipcRenderer.invoke("get-settings"),
   chooseFolder: () => ipcRenderer.invoke("choose-folder"),
   minimize: () => ipcRenderer.invoke("window-minimize"),

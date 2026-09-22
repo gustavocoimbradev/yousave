@@ -16,6 +16,8 @@ const ytDlpPath = unpacked(
 const ffmpegBin = unpacked(ffmpegPath);
 const ydl = create(ytDlpPath);
 
+const GITHUB_URL = "https://github.com/gustavocoimbradev/";
+
 let currentDownload = null;
 
 // ---------- Persisted settings ----------
@@ -52,7 +54,7 @@ let mainWindow = null;
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 400,
-    height: 350,
+    height: 374,
     resizable: false,
     frame: false,
     backgroundColor: "#fcfcfd",
@@ -199,6 +201,10 @@ ipcMain.handle("download", async (event, { url, mp3 }) => {
   }
 });
 
-ipcMain.handle("show-in-folder", (_event, filePath) => {
-  shell.showItemInFolder(filePath);
+ipcMain.handle("open-file", (_event, filePath) => {
+  shell.openPath(filePath);
+});
+
+ipcMain.handle("open-external", (_event, url) => {
+  if (url === GITHUB_URL) shell.openExternal(url);
 });

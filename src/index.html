@@ -59,6 +59,8 @@
       <button id="download">Baixar</button>
 
       <p id="inlineError" class="inline-error"></p>
+
+      <p class="credit">Criado por <a href="#" id="creditLink">Gustavo Coimbra</a></p>
     </main>
   </div>
 
@@ -79,16 +81,9 @@
         <span id="progressSpeed"></span>
       </div>
 
-      <div id="dialogFolder" class="dialog-folder">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-        </svg>
-        <span id="folderPath"></span>
-      </div>
-
       <div class="dialog-actions">
         <button id="dialogCancel" class="btn-secondary">Cancelar</button>
-        <button id="dialogOpenFolder" class="btn-primary hidden">Abrir pasta</button>
+        <button id="dialogOpenFile" class="btn-outline hidden">Abrir arquivo</button>
         <button id="dialogClose" class="btn-primary hidden">Concluir</button>
       </div>
     </div>

@@ -14,10 +14,8 @@ const progressTrack = document.querySelector("#overlay .progress-track");
 const progressFill = document.getElementById("progressFill");
 const progressPercent = document.getElementById("progressPercent");
 const progressSpeed = document.getElementById("progressSpeed");
-const dialogFolder = document.getElementById("dialogFolder");
-const folderPathEl = document.getElementById("folderPath");
 const dialogCancel = document.getElementById("dialogCancel");
-const dialogOpenFolder = document.getElementById("dialogOpenFolder");
+const dialogOpenFile = document.getElementById("dialogOpenFile");
 const dialogClose = document.getElementById("dialogClose");
 
 const ICONS = {
@@ -33,6 +31,11 @@ let lastResult = null;
 
 document.getElementById("winMin").addEventListener("click", () => window.yousave.minimize());
 document.getElementById("winClose").addEventListener("click", () => window.yousave.close());
+
+document.getElementById("creditLink").addEventListener("click", (e) => {
+  e.preventDefault();
+  window.yousave.openExternal("https://github.com/gustavocoimbradev/");
+});
 
 // ---------- Save folder setting ----------
 
@@ -85,9 +88,8 @@ function resetDialog(videoUrl) {
   progressFill.style.width = "0%";
   progressPercent.textContent = "0%";
   progressSpeed.textContent = "";
-  dialogFolder.classList.remove("show");
   dialogCancel.classList.remove("hidden");
-  dialogOpenFolder.classList.add("hidden");
+  dialogOpenFile.classList.add("hidden");
   dialogClose.classList.add("hidden");
   overlay.classList.add("show");
 }
@@ -113,8 +115,8 @@ dialogCancel.addEventListener("click", async () => {
   await window.yousave.cancelDownload();
 });
 
-dialogOpenFolder.addEventListener("click", () => {
-  if (lastResult?.filePath) window.yousave.showInFolder(lastResult.filePath);
+dialogOpenFile.addEventListener("click", () => {
+  if (lastResult?.filePath) window.yousave.openFile(lastResult.filePath);
 });
 
 dialogClose.addEventListener("click", () => closeDialog());
@@ -139,10 +141,8 @@ downloadBtn.addEventListener("click", async () => {
     progressFill.style.width = "100%";
     progressPercent.textContent = "100%";
     progressSpeed.textContent = "";
-    showFolderText(folderPathEl, result.folder);
-    dialogFolder.classList.add("show");
     dialogCancel.classList.add("hidden");
-    dialogOpenFolder.classList.remove("hidden");
+    dialogOpenFile.classList.remove("hidden");
     dialogClose.classList.remove("hidden");
     urlInput.value = "";
   } else {
@@ -155,10 +155,6 @@ downloadBtn.addEventListener("click", async () => {
     dialogCancel.classList.add("hidden");
     dialogClose.classList.remove("hidden");
   }
-});
-
-dialogFolder.addEventListener("click", () => {
-  if (lastResult?.filePath) window.yousave.showInFolder(lastResult.filePath);
 });
 
 urlInput.addEventListener("keydown", (e) => {
