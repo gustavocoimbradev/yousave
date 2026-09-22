@@ -34,7 +34,25 @@
       </div>
     </header>
 
-    <main>
+    <div id="boot" class="boot">
+      <svg class="boot-logo" viewBox="0 0 40 40" aria-hidden="true">
+        <defs>
+          <linearGradient id="logoGradBoot" x1="2" y1="2" x2="38" y2="38" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#FF5B5B"/>
+            <stop offset="1" stop-color="#C4001D"/>
+          </linearGradient>
+        </defs>
+        <rect x="0.5" y="0.5" width="39" height="39" rx="11" fill="url(#logoGradBoot)"/>
+        <path d="M20 10.5v10.5" stroke="#fff" stroke-width="3.3" stroke-linecap="round"/>
+        <path d="M12.5 18.5 20 26l7.5-7.5" fill="none" stroke="#fff" stroke-width="3.3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M22.6 20.6a3 3 0 1 1-5.2 0 3 3 0 0 1 5.2 0Z" fill="url(#logoGradBoot)"/>
+        <path d="M12.5 30.5h15" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <div class="spinner"></div>
+      <p class="boot-label">Verificando atualizações…</p>
+    </div>
+
+    <main class="hidden">
       <div class="field">
         <label for="url">Link do vídeo</label>
         <input id="url" type="text" placeholder="https://www.youtube.com/watch?v=..." autofocus autocomplete="off" spellcheck="false" />

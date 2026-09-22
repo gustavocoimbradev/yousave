@@ -67,7 +67,12 @@ function createWindow() {
   mainWindow.loadFile(path.join(__dirname, "index.html"));
 
   mainWindow.webContents.once("did-finish-load", () => {
-    if (app.isPackaged) autoUpdater.checkForUpdates().catch(() => {});
+    if (!app.isPackaged) {
+      resolveBoot();
+      return;
+    }
+    setTimeout(resolveBoot, BOOT_TIMEOUT_MS);
+    autoUpdater.checkForUpdates().catch(resolveBoot);
   });
 }
 
@@ -79,6 +84,17 @@ app.on("window-all-closed", () => {
 
 // ---------- Auto update ----------
 
+const BOOT_TIMEOUT_MS = 6000;
+
+let bootResolved = false;
+let updateAvailable = false;
+
+function resolveBoot() {
+  if (bootResolved) return;
+  bootResolved = true;
+  mainWindow?.webContents.send("boot-status", { ready: true });
+}
+
 function sendUpdateStatus(payload) {
   mainWindow?.webContents.send("update-status", payload);
 }
@@ -87,7 +103,13 @@ autoUpdater.autoDownload = true;
 autoUpdater.autoInstallOnAppQuit = false;
 
 autoUpdater.on("update-available", (info) => {
+  updateAvailable = true;
+  bootResolved = true; // keep the boot splash covering the app; the update dialog takes over
   sendUpdateStatus({ state: "available", version: info.version });
+});
+
+autoUpdater.on("update-not-available", () => {
+  resolveBoot();
 });
 
 autoUpdater.on("download-progress", (progress) => {
@@ -100,7 +122,11 @@ autoUpdater.on("update-downloaded", () => {
 });
 
 autoUpdater.on("error", (err) => {
-  sendUpdateStatus({ state: "error", message: err?.message });
+  if (updateAvailable) {
+    sendUpdateStatus({ state: "error", message: err?.message });
+  } else {
+    resolveBoot();
+  }
 });
 
 // ---------- IPC ----------

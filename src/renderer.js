@@ -27,6 +27,14 @@ const ICONS = {
 
 let lastResult = null;
 
+// ---------- Boot splash ----------
+
+window.yousave.onBootStatus(({ ready }) => {
+  if (!ready) return;
+  document.getElementById("boot").classList.add("hidden");
+  document.querySelector("main").classList.remove("hidden");
+});
+
 // ---------- Window controls ----------
 
 document.getElementById("winMin").addEventListener("click", () => window.yousave.minimize());
