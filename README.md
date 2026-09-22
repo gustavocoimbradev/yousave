@@ -25,7 +25,6 @@ Cole o link de um vídeo do YouTube, escolha se quer o vídeo completo ou só o 
 - ♾️ Sem limite de downloads
 - 🚫 Sem anúncios, sem marca d'água, sem pegadinha
 - 💸 Gratuito, sempre
-- 🔄 Se atualiza sozinho — você nunca precisa reinstalar manualmente
 
 ## Como usar
 
