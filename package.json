@@ -34,6 +34,7 @@
     ],
     "files": [
       "src/**/*",
+      "assets/**/*",
       "node_modules/**/*",
       "package.json",
       "!node_modules/ffmpeg-static/ffmpeg",
@@ -41,6 +42,7 @@
       "!node_modules/ffmpeg-static/ffmpeg.README",
       "!node_modules/youtube-dl-exec/bin/yt-dlp"
     ],
+    "icon": "assets/icon.png",
     "win": {
       "target": "nsis"
     },

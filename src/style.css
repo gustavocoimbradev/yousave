@@ -221,7 +221,6 @@ button#download:active { transform: scale(0.98); }
 
 .credit a {
   color: var(--red);
-  font-weight: 700;
   text-decoration: none;
   cursor: pointer;
 }

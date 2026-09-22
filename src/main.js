@@ -58,6 +58,7 @@ function createWindow() {
     resizable: false,
     frame: false,
     backgroundColor: "#fcfcfd",
+    icon: path.join(__dirname, "..", "assets", "icon.png"),
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       contextIsolation: true,
