@@ -1,0 +1,120 @@
+:root {
+  --red: #ff0000;
+  --red-dark: #cc0000;
+  --ink: #0f0f0f;
+  --gray: #606060;
+  --border: #e5e5e5;
+  --bg: #ffffff;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-user-select: none;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.logo { width: 34px; height: 24px; }
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+main {
+  flex: 1;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray);
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.15s;
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+input[type="text"]:focus { border-color: var(--red); }
+
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.toggle input { accent-color: var(--red); width: 16px; height: 16px; }
+
+button#download {
+  margin-top: 6px;
+  padding: 13px;
+  border: none;
+  border-radius: 24px;
+  background: var(--red);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+
+button#download:hover { background: var(--red-dark); }
+button#download:active { transform: scale(0.98); }
+button#download:disabled {
+  background: #f0a3a3;
+  cursor: not-allowed;
+}
+
+.status {
+  min-height: 60px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+  display: none;
+}
+
+.status.show { display: block; }
+.status.info { background: #f4f4f4; color: var(--gray); }
+.status.success { background: #e9f9ee; color: #1e7a3c; word-break: break-all; }
+.status.error { background: #fdecec; color: var(--red-dark); }
+
+.status .path-link {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
