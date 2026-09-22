@@ -1,6 +1,6 @@
 {
   "name": "yousave",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Baixe vídeos e áudios do YouTube com um clique.",
   "main": "src/main.js",
   "scripts": {
