@@ -10,4 +10,6 @@ contextBridge.exposeInMainWorld("yousave", {
   close: () => ipcRenderer.invoke("window-close"),
   onDownloadInfo: (cb) => ipcRenderer.on("download-info", (_e, data) => cb(data)),
   onDownloadProgress: (cb) => ipcRenderer.on("download-progress", (_e, data) => cb(data)),
+  onUpdateStatus: (cb) => ipcRenderer.on("update-status", (_e, data) => cb(data)),
+  onUpdateProgress: (cb) => ipcRenderer.on("update-progress", (_e, data) => cb(data)),
 });

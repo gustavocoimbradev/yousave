@@ -10,7 +10,7 @@ const overlay = document.getElementById("overlay");
 const dialogIcon = document.getElementById("dialogIcon");
 const dialogTitle = document.getElementById("dialogTitle");
 const dialogSubtitle = document.getElementById("dialogSubtitle");
-const progressTrack = document.querySelector(".progress-track");
+const progressTrack = document.querySelector("#overlay .progress-track");
 const progressFill = document.getElementById("progressFill");
 const progressPercent = document.getElementById("progressPercent");
 const progressSpeed = document.getElementById("progressSpeed");
@@ -163,4 +163,49 @@ dialogFolder.addEventListener("click", () => {
 
 urlInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") downloadBtn.click();
+});
+
+// ---------- Auto update ----------
+
+const updateOverlay = document.getElementById("updateOverlay");
+const updateIcon = document.getElementById("updateIcon");
+const updateTitle = document.getElementById("updateTitle");
+const updateSubtitle = document.getElementById("updateSubtitle");
+const updateProgressFill = document.getElementById("updateProgressFill");
+const updateProgressPercent = document.getElementById("updateProgressPercent");
+const updateActions = document.getElementById("updateActions");
+const updateDismiss = document.getElementById("updateDismiss");
+
+updateDismiss.addEventListener("click", () => updateOverlay.classList.remove("show"));
+
+window.yousave.onUpdateStatus(({ state, version, message }) => {
+  if (state === "available") {
+    updateIcon.className = "dialog-icon";
+    updateIcon.innerHTML = '<div class="spinner"></div>';
+    updateTitle.textContent = `Atualizando para v${version}`;
+    updateSubtitle.textContent = "Baixando atualização…";
+    updateProgressFill.style.width = "0%";
+    updateProgressPercent.textContent = "0%";
+    updateActions.classList.add("hidden");
+    updateOverlay.classList.add("show");
+  } else if (state === "downloaded") {
+    updateIcon.className = "dialog-icon success";
+    updateIcon.innerHTML = ICONS.success;
+    updateTitle.textContent = "Atualização concluída!";
+    updateSubtitle.textContent = "Reiniciando o YouSave…";
+    updateProgressFill.style.width = "100%";
+    updateProgressPercent.textContent = "100%";
+  } else if (state === "error") {
+    updateIcon.className = "dialog-icon error";
+    updateIcon.innerHTML = ICONS.error;
+    updateTitle.textContent = "Não foi possível atualizar";
+    updateSubtitle.textContent = message || "Tente novamente mais tarde.";
+    updateActions.classList.remove("hidden");
+  }
+});
+
+window.yousave.onUpdateProgress(({ percent }) => {
+  const clamped = Math.max(0, Math.min(100, percent || 0));
+  updateProgressFill.style.width = `${clamped}%`;
+  updateProgressPercent.textContent = `${clamped.toFixed(0)}%`;
 });

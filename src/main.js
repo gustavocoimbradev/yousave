@@ -3,6 +3,7 @@ const path = require("path");
 const fs = require("fs");
 const { create } = require("youtube-dl-exec");
 const ffmpegPath = require("ffmpeg-static");
+const { autoUpdater } = require("electron-updater");
 
 function unpacked(p) {
   return app.isPackaged ? p.replace("app.asar", "app.asar.unpacked") : p;
@@ -46,8 +47,10 @@ function getDownloadDir() {
 
 // ---------- Window ----------
 
+let mainWindow = null;
+
 function createWindow() {
-  const win = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 400,
     height: 350,
     resizable: false,
@@ -58,13 +61,43 @@ function createWindow() {
       contextIsolation: true,
     },
   });
-  win.loadFile(path.join(__dirname, "index.html"));
+  mainWindow.loadFile(path.join(__dirname, "index.html"));
+
+  mainWindow.webContents.once("did-finish-load", () => {
+    if (app.isPackaged) autoUpdater.checkForUpdates().catch(() => {});
+  });
 }
 
 app.whenReady().then(createWindow);
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") app.quit();
+});
+
+// ---------- Auto update ----------
+
+function sendUpdateStatus(payload) {
+  mainWindow?.webContents.send("update-status", payload);
+}
+
+autoUpdater.autoDownload = true;
+autoUpdater.autoInstallOnAppQuit = false;
+
+autoUpdater.on("update-available", (info) => {
+  sendUpdateStatus({ state: "available", version: info.version });
+});
+
+autoUpdater.on("download-progress", (progress) => {
+  mainWindow?.webContents.send("update-progress", { percent: progress.percent });
+});
+
+autoUpdater.on("update-downloaded", () => {
+  sendUpdateStatus({ state: "downloaded" });
+  setTimeout(() => autoUpdater.quitAndInstall(true, true), 1500);
+});
+
+autoUpdater.on("error", (err) => {
+  sendUpdateStatus({ state: "error", message: err?.message });
 });
 
 // ---------- IPC ----------

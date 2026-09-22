@@ -94,6 +94,29 @@
     </div>
   </div>
 
+  <div id="updateOverlay" class="overlay">
+    <div class="dialog">
+      <div class="dialog-icon" id="updateIcon">
+        <div class="spinner"></div>
+      </div>
+
+      <h2 id="updateTitle">Atualização disponível</h2>
+      <p id="updateSubtitle" class="dialog-subtitle">Baixando atualização…</p>
+
+      <div class="progress-track">
+        <div class="progress-fill" id="updateProgressFill"></div>
+      </div>
+      <div class="progress-meta">
+        <span id="updateProgressPercent">0%</span>
+        <span></span>
+      </div>
+
+      <div class="dialog-actions hidden" id="updateActions">
+        <button id="updateDismiss" class="btn-primary">Continuar</button>
+      </div>
+    </div>
+  </div>
+
   <script src="renderer.js"></script>
 </body>
 </html>
