@@ -171,6 +171,7 @@ ipcMain.handle("download", async (event, { url, mp3 }) => {
     output: outTmpl,
     ffmpegLocation: ffmpegBin,
     noPlaylist: true,
+    trimFilenames: 150,
     print: "after_move:filepath",
     noWarnings: true,
     newline: true,
